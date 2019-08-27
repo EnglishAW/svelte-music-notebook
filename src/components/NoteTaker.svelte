@@ -1,32 +1,26 @@
 <script>
   import { writable } from "svelte/store";
-  import { markupHeaderStore, markupNotesStore } from "./../store.js";
+  import { markupConsolidatedStore } from "./../store.js";
   import MarkupNotesOnly from "./MarkupNotesOnly.svelte";
   import DescripterForm from "./DescripterForm.svelte";
   import NotationOutput from "./NotationOutput.svelte";
 
-  let markupHeader = ""; // Will be set updated by store
-  let markupNotes = ""; // Will be set updated by store
-  let markup = "";
+  let markupHeader = "";
+  let markupNotes = "| |]";
+  let markup = ""; // Will be set updated by store
 
-  // TODO: Research how this can be done in the store
-  $: markup = markupHeader + markupNotes;
-
-  $: console.log(markup);
-
-  markupHeaderStore.subscribe(value => {
-    markupHeader = value;
-  });
-  markupNotesStore.subscribe(value => {
-    markupNotes = value;
+  markupConsolidatedStore.subscribe(value => {
+    markup = value;
   });
 
   const handleMarkupHeaderChange = markup => {
-    markupHeaderStore.set(markup);
+    markupHeader = markup;
   };
   const handleMarkupNotesChange = markup => {
-    markupNotesStore.set(markup);
+    markupNotes = markup;
   };
+
+  $: markupConsolidatedStore.set(markupHeader + markupNotes);
 </script>
 
 <style>
@@ -37,6 +31,9 @@
 </style>
 
 <h1>Music Notebook</h1>
-<DescripterForm />
+<DescripterForm onChange={handleMarkupHeaderChange} />
 <MarkupNotesOnly markup={markupNotes} onChange={handleMarkupNotesChange} />
-<NotationOutput {markup} />
+<hr />
+<div class="outputContainer">
+  <NotationOutput {markup} />
+</div>

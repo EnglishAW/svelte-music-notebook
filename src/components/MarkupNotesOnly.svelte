@@ -7,6 +7,7 @@
 
 </style>
 
+<h2>Quick Notes:</h2>
 <textarea
   id="markupNotesOnly"
   rows="1"

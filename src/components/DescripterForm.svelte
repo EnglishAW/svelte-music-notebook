@@ -1,25 +1,14 @@
 <script>
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
-  import {
-    consolidateMarkupHeaderStore,
-    markupIdStore,
-    markupTitleStore,
-    markupComposerStore,
-    markupSourceStore,
-    markupMeterStore,
-    markupLengthStore,
-    markupKeyStore
-  } from "./../store.js";
   import abcjs from "abcjs";
   import MarkupArea from "./MarkupArea.svelte";
   import NotationOutput from "./NotationOutput.svelte";
 
-  //   export let onChange;
+  // Props
+  export let onChange;
 
-  const descriptionMarkup = writable("");
-
-  // Updated by store
+  // Local
   let id = "01";
   let title = "Title";
   let composer = "";
@@ -31,62 +20,64 @@
   let attrMap = [];
 
   $: attrMap = [
-    { name: "ID", id: "id", key: "X", value: id, store: markupIdStore },
+    { name: "ID", id: "id", key: "X", value: id },
     {
       name: "Title",
       id: "title",
       key: "T",
-      value: title,
-      store: markupTitleStore
+      value: title
     },
     {
       name: "Composer",
       id: "composer",
       key: "C",
-      value: composer,
-      store: markupComposerStore
+      value: composer
     },
     {
       name: "Source",
       id: "source",
       key: "S",
-      value: source,
-      store: markupSourceStore
+      value: source
     },
     {
       name: "Meter",
       id: "meter",
       key: "M",
-      value: meter,
-      store: markupMeterStore
+      value: meter
     },
     {
       name: "Note Duration",
       id: "length",
       key: "L",
-      value: length,
-      store: markupLengthStore
+      value: length
     },
     {
       name: "Key Signature",
       id: "key",
       key: "K",
-      value: key,
-      store: markupKeyStore
+      value: key
     }
   ];
 
   onMount(async () => {
-    await handleChange();
+    await onChange(consolidateMarkupHeader());
   });
 
   const handleChange = e => {
     attrMap.forEach(attr => {
       if (!!e && e.target.id === attr.id) {
-        attr.store.set(e.target.value);
+        attr.value = e.target.value;
+        onChange(consolidateMarkupHeader());
       }
     });
-    consolidateMarkupHeaderStore();
+  };
+
+  export const consolidateMarkupHeader = () => {
+    let markupHeader = "";
+    attrMap.forEach(attr => {
+      markupHeader += `${attr.key}: ${attr.value}\n`;
+    });
+    return markupHeader;
   };
 </script>
 
@@ -101,7 +92,7 @@
       <input
         id={attr.id}
         type="text"
-        on:keyup={handleChange}
+        on:input={handleChange}
         value={attr.value} />
     </label>
   {/each}
