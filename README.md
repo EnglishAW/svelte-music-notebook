@@ -1,7 +1,7 @@
 *Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
-### Music Notebook
+# Music Notebook
 This is a testing ground to play around with svelte. It is based around creating a music composition tool for musicians to quickly write down musical ideas or phrases. The app uses a mix of ui elements and a markup language for sheet music in order to aid the musician to quickly take notes while playing or composing.
 
 The markup languae used is called abc notation. learn more here: http://abcnotation.com/
@@ -26,7 +26,7 @@ Navigate to [localhost:5000](http://localhost:5000). You should see your app run
 
 ---
 
-# Try svelte app yourself
+## Try svelte app yourself
 
 This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
 
