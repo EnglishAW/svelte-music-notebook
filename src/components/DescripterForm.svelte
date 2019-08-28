@@ -82,18 +82,31 @@
 </script>
 
 <style>
-
+  .container {
+    /* display: flex; */
+    justify-content: center;
+  }
+  .form {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  .inputComponent {
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
 
-<div>
-  {#each attrMap as attr}
-    <label>
-      {attr.name}:
-      <input
-        id={attr.id}
-        type="text"
-        on:input={handleChange}
-        value={attr.value} />
-    </label>
-  {/each}
+<div class="container">
+  <div class="form">
+    {#each attrMap as attr}
+      <div class="inputComponent">
+        <label>{attr.name}:&nbsp;</label>
+        <input
+          id={attr.id}
+          type="text"
+          on:input={handleChange}
+          value={attr.value} />
+      </div>
+    {/each}
+  </div>
 </div>

@@ -4,7 +4,10 @@
 </script>
 
 <style>
-
+  #markupNotesOnly {
+    width: 100%;
+    font-size: 24px;
+  }
 </style>
 
 <h2>Quick Notes:</h2>
